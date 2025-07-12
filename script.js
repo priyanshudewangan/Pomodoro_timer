@@ -3,6 +3,9 @@ const startButton = document.getElementById('start');
 const pauseButton = document.getElementById('pause');
 const resetButton = document.getElementById('reset');
 
+pauseButton.disabled = true;
+resetButton.disabled = true;
+
 let timeLeft = 25 * 60; // 25 minutes in seconds
 let timerInterval = null;
 let isPaused = false;
@@ -24,6 +27,13 @@ function updateDisplay() {
 function startTimer() {
     if (timerInterval !== null) return;
 
+    startButton.disabled = true;
+    pauseButton.disabled = false;
+    resetButton.disabled = false;
+    if (timeLeft > 0) {
+    timeLeft--;
+    updateDisplay();
+}
     timerInterval = setInterval(() => {
         if (!isPaused) {
             if (timeLeft > 0) {
@@ -53,6 +63,9 @@ function resetTimer() {
     pauseButton.textContent = "Pause";
     timeLeft = 25 * 60;
     updateDisplay();
+    startButton.disabled = false;
+    pauseButton.disabled = true;
+    resetButton.disabled = true;
 }
 
 startButton.addEventListener("click", startTimer);
